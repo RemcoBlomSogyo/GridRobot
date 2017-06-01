@@ -1,6 +1,5 @@
 package nl.sogyo.rblom.gridrobot;
 
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,20 +37,20 @@ public class MainActivity extends AppCompatActivity {
                 if (aTileIsSelected()) {
                     switch ((int) tankButton.getTag()) {
                         case R.drawable.tank_button_up:
-                            selectedView[0].setImageResource(R.drawable.tile_tank_up);
-                            selectedView[0].setTag(R.drawable.tile_tank_up);
+                            selectedView[0].setImageResource(R.drawable.selected_tile_tank_up);
+                            selectedView[0].setTag(R.drawable.selected_tile_tank_up);
                             break;
                         case R.drawable.tank_button_right:
-                            selectedView[0].setImageResource(R.drawable.tile_tank_right);
-                            selectedView[0].setTag(R.drawable.tile_tank_right);
+                            selectedView[0].setImageResource(R.drawable.selected_tile_tank_right);
+                            selectedView[0].setTag(R.drawable.selected_tile_tank_right);
                             break;
                         case R.drawable.tank_button_down:
-                            selectedView[0].setImageResource(R.drawable.tile_tank_down);
-                            selectedView[0].setTag(R.drawable.tile_tank_down);
+                            selectedView[0].setImageResource(R.drawable.selected_tile_tank_down);
+                            selectedView[0].setTag(R.drawable.selected_tile_tank_down);
                             break;
                         case R.drawable.tank_button_left:
-                            selectedView[0].setImageResource(R.drawable.tile_tank_left);
-                            selectedView[0].setTag(R.drawable.tile_tank_left);
+                            selectedView[0].setImageResource(R.drawable.selected_tile_tank_left);
+                            selectedView[0].setTag(R.drawable.selected_tile_tank_left);
                     }
                     selectedView[0] = null;
                 }
@@ -62,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (aTileIsSelected()) {
-                    selectedView[0].setImageResource(R.drawable.tile_access_denied);
-                    selectedView[0].setTag(R.drawable.tile_access_denied);
+                    selectedView[0].setImageResource(R.drawable.selected_tile_access_denied);
+                    selectedView[0].setTag(R.drawable.selected_tile_access_denied);
                 }
                 selectedView[0] = null;
             }
@@ -96,8 +95,9 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tileGrid[0][0].setImageDrawable(getDrawable(R.drawable.selected_tile));
-                if (tileIsDeselectedTile(tileGrid[0][0])) {
+//                tileGrid[0][0].setImageDrawable(getDrawable(R.drawable.selected_tile));
+                if (tileIsNotAlreadySelected(tileGrid[0][0])) {
+                    deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][0]);
                 } else {
                     deselectTile(tileGrid[0][0]);
@@ -109,8 +109,9 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tileGrid[0][1].setImageDrawable(getDrawable(R.drawable.selected_tile));
-                if (tileIsDeselectedTile(tileGrid[0][1])) {
+//                tileGrid[0][1].setImageDrawable(getDrawable(R.drawable.selected_tile));
+                if (tileIsNotAlreadySelected(tileGrid[0][1])) {
+                    deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][1]);
                 } else {
                     deselectTile(tileGrid[0][1]);
@@ -122,8 +123,9 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tileGrid[0][2].setImageDrawable(getDrawable(R.drawable.selected_tile));
-                if (tileIsDeselectedTile(tileGrid[0][2])) {
+//                tileGrid[0][2].setImageDrawable(getDrawable(R.drawable.selected_tile));
+                if (tileIsNotAlreadySelected(tileGrid[0][2])) {
+                    deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][2]);
                 } else {
                     deselectTile(tileGrid[0][2]);
@@ -135,8 +137,9 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tileGrid[0][3].setImageDrawable(getDrawable(R.drawable.selected_tile));
-                if (tileIsDeselectedTile(tileGrid[0][3])) {
+//                tileGrid[0][3].setImageDrawable(getDrawable(R.drawable.selected_tile));
+                if (tileIsNotAlreadySelected(tileGrid[0][3])) {
+                    deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][3]);
                 } else {
                     deselectTile(tileGrid[0][3]);
@@ -148,8 +151,9 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tileGrid[0][4].setImageDrawable(getDrawable(R.drawable.selected_tile));
-                if (tileIsDeselectedTile(tileGrid[0][4])) {
+//                tileGrid[0][4].setImageDrawable(getDrawable(R.drawable.selected_tile));
+                if (tileIsNotAlreadySelected(tileGrid[0][4])) {
+                    deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][4]);
                 } else {
                     deselectTile(tileGrid[0][4]);
@@ -161,8 +165,9 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tileGrid[0][5].setImageDrawable(getDrawable(R.drawable.selected_tile));
-                if (tileIsDeselectedTile(tileGrid[0][5])) {
+//                tileGrid[0][5].setImageDrawable(getDrawable(R.drawable.selected_tile));
+                if (tileIsNotAlreadySelected(tileGrid[0][5])) {
+                    deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][5]);
                 } else {
                     deselectTile(tileGrid[0][5]);
@@ -174,8 +179,9 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][6].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tileGrid[0][6].setImageDrawable(getDrawable(R.drawable.selected_tile));
-                if (tileIsDeselectedTile(tileGrid[0][6])) {
+//                tileGrid[0][6].setImageDrawable(getDrawable(R.drawable.selected_tile));
+                if (tileIsNotAlreadySelected(tileGrid[0][6])) {
+                    deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][6]);
                 } else {
                     deselectTile(tileGrid[0][6]);
@@ -187,8 +193,9 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[1][0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tileGrid[1][0].setImageDrawable(getDrawable(R.drawable.selected_tile));
-                if (tileIsDeselectedTile(tileGrid[1][0])) {
+//                tileGrid[1][0].setImageDrawable(getDrawable(R.drawable.selected_tile));
+                if (tileIsNotAlreadySelected(tileGrid[1][0])) {
+                    deselectTile(selectedView[0]);
                     selectTile(tileGrid[1][0]);
                 } else {
                     deselectTile(tileGrid[1][0]);
@@ -200,8 +207,9 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[1][1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tileGrid[1][1].setImageDrawable(getDrawable(R.drawable.selected_tile));
-                if (tileIsDeselectedTile(tileGrid[1][1])) {
+//                tileGrid[1][1].setImageDrawable(getDrawable(R.drawable.selected_tile));
+                if (tileIsNotAlreadySelected(tileGrid[1][1])) {
+                    deselectTile(selectedView[0]);
                     selectTile(tileGrid[1][1]);
                 } else {
                     deselectTile(tileGrid[1][1]);
@@ -213,8 +221,9 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[1][2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tileGrid[1][2].setImageDrawable(getDrawable(R.drawable.selected_tile));
-                if (tileIsDeselectedTile(tileGrid[1][2])) {
+//                tileGrid[1][2].setImageDrawable(getDrawable(R.drawable.selected_tile));
+                if (tileIsNotAlreadySelected(tileGrid[1][2])) {
+                    deselectTile(selectedView[0]);
                     selectTile(tileGrid[1][2]);
                 } else {
                     deselectTile(tileGrid[1][2]);
@@ -224,13 +233,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void deselectTile(ImageView imageView) {
-        imageView.setImageResource(R.drawable.tile);
-        imageView.setTag(R.drawable.tile);
-        selectedView[0] = null;
+        //imageView.setImageResource(R.drawable.tile);
+        //imageView.setTag(R.drawable.tile);
+        if (aTileIsSelected()) {
+            changeTileImage(imageView);
+            selectedView[0] = null;
+        }
     }
 
-    private boolean tileIsDeselectedTile(ImageView imageView) {
-        if (imageView.getTag().equals(R.drawable.tile)) {
+    private boolean tileIsNotAlreadySelected(ImageView imageView) {
+        if (imageView.getTag().equals(R.drawable.tile) // dit moet nog gecast worden naar int
+                || imageView.getTag().equals(R.drawable.tile_access_denied)
+                || imageView.getTag().equals(R.drawable.tile_tank_up)
+                || imageView.getTag().equals(R.drawable.tile_tank_right)
+                || imageView.getTag().equals(R.drawable.tile_tank_down)
+                || imageView.getTag().equals(R.drawable.tile_tank_left)) {
             return true;
         } else {
             return false;
@@ -238,12 +255,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void selectTile(ImageView imageView) {
-        //int tag = (int) imageView.getTag();
-        imageView.setImageResource(R.drawable.selected_tile);
-        imageView.setTag(R.drawable.selected_tile);
-        if (aTileIsSelected()) {
-            deselectTile(selectedView[0]);
-        }
+        //imageView.setImageResource(R.drawable.selected_tile);
+        //imageView.setTag(R.drawable.selected_tile);
+        changeTileImage(imageView);
+//        if (aTileIsSelected()) {
+//            deselectTile(selectedView[0]);
+//        }
         selectedView[0] = imageView;
     }
 
@@ -253,5 +270,47 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    private void changeTileImage(ImageView imageView) {
+        int drawableID = 0;
+        switch((int) imageView.getTag()) {
+            case R.drawable.tile:
+                imageView.setImageResource(drawableID = R.drawable.selected_tile);
+                break;
+            case R.drawable.tile_access_denied:
+                imageView.setImageResource(drawableID = R.drawable.selected_tile_access_denied);
+                break;
+            case R.drawable.tile_tank_up:
+                imageView.setImageResource(drawableID = R.drawable.selected_tile_tank_up);
+                break;
+            case R.drawable.tile_tank_right:
+                imageView.setImageResource(drawableID = R.drawable.selected_tile_tank_right);
+                break;
+            case R.drawable.tile_tank_down:
+                imageView.setImageResource(drawableID = R.drawable.selected_tile_tank_down);
+                break;
+            case R.drawable.tile_tank_left:
+                imageView.setImageResource(drawableID = R.drawable.selected_tile_tank_left);
+                break;
+            case R.drawable.selected_tile:
+                imageView.setImageResource(drawableID = R.drawable.tile);
+                break;
+            case R.drawable.selected_tile_access_denied:
+                imageView.setImageResource(drawableID = R.drawable.tile_access_denied);
+                break;
+            case R.drawable.selected_tile_tank_up:
+                imageView.setImageResource(drawableID = R.drawable.tile_tank_up);
+                break;
+            case R.drawable.selected_tile_tank_right:
+                imageView.setImageResource(drawableID = R.drawable.tile_tank_right);
+                break;
+            case R.drawable.selected_tile_tank_down:
+                imageView.setImageResource(drawableID = R.drawable.tile_tank_down);
+                break;
+            case R.drawable.selected_tile_tank_left:
+                imageView.setImageResource(drawableID = R.drawable.tile_tank_left);
+        }
+        imageView.setTag(drawableID);
     }
 }

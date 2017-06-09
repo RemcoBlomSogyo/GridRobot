@@ -550,7 +550,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView50"
+        android:id="@+id/flagButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/flag_button"

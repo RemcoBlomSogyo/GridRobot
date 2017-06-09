@@ -8,6 +8,7 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity {
 
     ImageView[] selectedView = new ImageView[]{null};
+    ImageView[] robotLocation = new ImageView[]{null};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,8 +16,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final ImageView tankButton = (ImageView) findViewById(R.id.tankButton);
-        final ImageView accessDeniedButton = (ImageView) findViewById(R.id.accessDeniedButton);
-        final ImageView turnButton = (ImageView) findViewById(R.id.turnButton);
+        ImageView accessDeniedButton = (ImageView) findViewById(R.id.accessDeniedButton);
+        ImageView turnButton = (ImageView) findViewById(R.id.turnButton);
+        ImageView wastebinButton = (ImageView) findViewById(R.id.wastebinButton);
+        ImageView flagButton = (ImageView) findViewById(R.id.flagButton);
 
         final ImageView[][] tileGrid = new ImageView[7][7];
         tileGrid[0][0] = (ImageView) findViewById(R.id.imageView);
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (aTileIsSelected()) {
+                    deletePreviousRobotLocation();
                     switch ((int) tankButton.getTag()) {
                         case R.drawable.tank_button_up:
                             selectedView[0].setImageResource(R.drawable.selected_tile_tank_up);
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedView[0].setImageResource(R.drawable.selected_tile_tank_left);
                             selectedView[0].setTag(R.drawable.selected_tile_tank_left);
                     }
-                    selectedView[0] = null;
+                    robotLocation[0] = selectedView[0];
                 }
             }
         });
@@ -61,10 +65,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (aTileIsSelected()) {
+                    if (selectedTileIsRobotLocation()) {
+                        robotLocation[0] = null;
+                    }
                     selectedView[0].setImageResource(R.drawable.selected_tile_access_denied);
                     selectedView[0].setTag(R.drawable.selected_tile_access_denied);
                 }
-                selectedView[0] = null;
             }
         });
 
@@ -87,6 +93,32 @@ public class MainActivity extends AppCompatActivity {
                     case R.drawable.tank_button_left:
                         tankButton.setImageResource(R.drawable.tank_button_up);
                         tankButton.setTag(R.drawable.tank_button_up);
+                }
+            }
+        });
+
+        wastebinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (aTileIsSelected()) {
+                    if (selectedTileIsRobotLocation()) {
+                        robotLocation[0] = null;
+                    }
+                    selectedView[0].setImageResource(R.drawable.selected_tile);
+                    selectedView[0].setTag(R.drawable.selected_tile);
+                }
+            }
+        });
+
+        flagButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (aTileIsSelected()) {
+                    if (selectedTileIsRobotLocation()) {
+                        robotLocation[0] = null;
+                    }
+                    selectedView[0].setImageResource(R.drawable.selected_tile_flag);
+                    selectedView[0].setTag(R.drawable.selected_tile_flag);
                 }
             }
         });
@@ -242,12 +274,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean tileIsNotAlreadySelected(ImageView imageView) {
-        if (imageView.getTag().equals(R.drawable.tile) // dit moet nog gecast worden naar int
+        if (imageView.getTag().equals(R.drawable.tile)
                 || imageView.getTag().equals(R.drawable.tile_access_denied)
                 || imageView.getTag().equals(R.drawable.tile_tank_up)
                 || imageView.getTag().equals(R.drawable.tile_tank_right)
                 || imageView.getTag().equals(R.drawable.tile_tank_down)
-                || imageView.getTag().equals(R.drawable.tile_tank_left)) {
+                || imageView.getTag().equals(R.drawable.tile_tank_left)
+                || imageView.getTag().equals(R.drawable.tile_flag)) {
             return true;
         } else {
             return false;
@@ -265,11 +298,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean aTileIsSelected() {
-        if (selectedView[0] != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return (selectedView[0] != null);
     }
 
     private void changeTileImage(ImageView imageView) {
@@ -293,6 +322,9 @@ public class MainActivity extends AppCompatActivity {
             case R.drawable.tile_tank_left:
                 imageView.setImageResource(drawableID = R.drawable.selected_tile_tank_left);
                 break;
+            case R.drawable.tile_flag:
+                imageView.setImageResource(drawableID = R.drawable.selected_tile_flag);
+                break;
             case R.drawable.selected_tile:
                 imageView.setImageResource(drawableID = R.drawable.tile);
                 break;
@@ -310,7 +342,22 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.drawable.selected_tile_tank_left:
                 imageView.setImageResource(drawableID = R.drawable.tile_tank_left);
+                break;
+            case R.drawable.selected_tile_flag:
+                imageView.setImageResource(drawableID = R.drawable.tile_flag);
         }
         imageView.setTag(drawableID);
+    }
+
+    private void deletePreviousRobotLocation() {
+        if (robotLocation[0] != null) {
+            robotLocation[0].setImageResource(R.drawable.tile);
+            robotLocation[0].setTag(R.drawable.tile);
+            robotLocation[0] = null;
+        }
+    }
+
+    private boolean selectedTileIsRobotLocation() {
+        return (selectedView[0] == robotLocation[0]);
     }
 }

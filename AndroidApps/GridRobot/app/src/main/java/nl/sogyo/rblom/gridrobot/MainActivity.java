@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tileGrid[0][0].setImageDrawable(getDrawable(R.drawable.selected_tile));
                 if (tileIsNotAlreadySelected(tileGrid[0][0])) {
                     deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][0]);
@@ -141,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tileGrid[0][1].setImageDrawable(getDrawable(R.drawable.selected_tile));
                 if (tileIsNotAlreadySelected(tileGrid[0][1])) {
                     deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][1]);
@@ -155,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tileGrid[0][2].setImageDrawable(getDrawable(R.drawable.selected_tile));
                 if (tileIsNotAlreadySelected(tileGrid[0][2])) {
                     deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][2]);
@@ -169,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tileGrid[0][3].setImageDrawable(getDrawable(R.drawable.selected_tile));
                 if (tileIsNotAlreadySelected(tileGrid[0][3])) {
                     deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][3]);
@@ -183,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tileGrid[0][4].setImageDrawable(getDrawable(R.drawable.selected_tile));
                 if (tileIsNotAlreadySelected(tileGrid[0][4])) {
                     deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][4]);
@@ -197,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tileGrid[0][5].setImageDrawable(getDrawable(R.drawable.selected_tile));
                 if (tileIsNotAlreadySelected(tileGrid[0][5])) {
                     deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][5]);
@@ -211,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[0][6].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tileGrid[0][6].setImageDrawable(getDrawable(R.drawable.selected_tile));
                 if (tileIsNotAlreadySelected(tileGrid[0][6])) {
                     deselectTile(selectedView[0]);
                     selectTile(tileGrid[0][6]);
@@ -225,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[1][0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tileGrid[1][0].setImageDrawable(getDrawable(R.drawable.selected_tile));
                 if (tileIsNotAlreadySelected(tileGrid[1][0])) {
                     deselectTile(selectedView[0]);
                     selectTile(tileGrid[1][0]);
@@ -239,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[1][1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tileGrid[1][1].setImageDrawable(getDrawable(R.drawable.selected_tile));
                 if (tileIsNotAlreadySelected(tileGrid[1][1])) {
                     deselectTile(selectedView[0]);
                     selectTile(tileGrid[1][1]);
@@ -253,7 +244,6 @@ public class MainActivity extends AppCompatActivity {
         tileGrid[1][2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tileGrid[1][2].setImageDrawable(getDrawable(R.drawable.selected_tile));
                 if (tileIsNotAlreadySelected(tileGrid[1][2])) {
                     deselectTile(selectedView[0]);
                     selectTile(tileGrid[1][2]);
@@ -265,8 +255,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void deselectTile(ImageView imageView) {
-        //imageView.setImageResource(R.drawable.tile);
-        //imageView.setTag(R.drawable.tile);
         if (aTileIsSelected()) {
             changeTileImage(imageView);
             selectedView[0] = null;
@@ -288,12 +276,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void selectTile(ImageView imageView) {
-        //imageView.setImageResource(R.drawable.selected_tile);
-        //imageView.setTag(R.drawable.selected_tile);
         changeTileImage(imageView);
-//        if (aTileIsSelected()) {
-//            deselectTile(selectedView[0]);
-//        }
         selectedView[0] = imageView;
     }
 

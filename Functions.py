@@ -70,13 +70,56 @@ def merge_long_lines (img,lines_long):
                 lines_single.append(line)
                 cv2.line(img,(int(np.average(xStartArray)), int(np.average(yStartArray))),(int(np.average(xEndArray)), int(np.average(yEndArray))),(0,255,0),2)
     
-    
     return lines_single
 
+def checkStop(lines, height, horizontalTreshold, stopTreshold):
+    stop = True;
+    commando = "STANDARD"
+    for x in range(0,len(lines)):
+        if abs(lines[x].getSlope()) < horizontalTreshold:
+            average = (lines[x].getA()[1] + lines[x].getB()[1])/2
+            if average > stopTreshold*height:
+                stop = False
+                break;
+    
+    if (stop):
+        commando = "STOP, "
+    else:
+        commando = "KEEP GOING, "
+    return commando
 
+def checkStraight(lines, img, horizontalTreshold, adjustThreshold):
+    # Get the horizontal line with the lowest slope
+    AMin=9999999999999
+    lineAMin = None
+    for x in range(0,len(lines)):
+        aTemporary=abs(lines[x].getSlope())
+        if aTemporary<AMin:
+            AMin=aTemporary
+            lineAMin=lines[x]
+    
+    cv2.line(img,(int(lineAMin.getA()[0]), int(lineAMin.getA()[1])),(int(lineAMin.getB()[0]), int(lineAMin.getB()[1])),(0,0,255),2)
+    lineAMin.draw(img, 255, 255, 255);
+    cv2.imwrite("Images/image2.jpg", img)
+    
+    degrees = lineAMin.getDegrees()
+    if AMin > horizontalTreshold and degrees > adjustThreshold:
+        if lineAMin.getSlope() > 0:
+            commando = "LEFT"
+            print("LEFT" + str(degrees));
+        else:
+            commando = "RIGHT"
+            print("RIGHT" + str(degrees));
+    else:
+        commando = None
+        print("NONE");
+    return (commando, degrees)
 
-
-
+def calculateCommando(lines, img, height, width, horizontalTreshold, stopTreshold, adjustThreshold):
+    commando = ""
+    commando += checkStop(lines, height, horizontalTreshold, stopTreshold)
+    commando += checkStraight(lines, img, horizontalTreshold, adjustThreshold)
+    return commando
 
 def line_intersection(line1, line2, width, height):
     xdiff = (line1[0][0] - line1[1][0], line2[0][0] - line2[1][0])

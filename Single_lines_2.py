@@ -1,5 +1,5 @@
 import cv2
-import numpy as np
+import math 
 from scipy import ndimage
 from PIL import Image
 import PIL.ImageOps
@@ -7,24 +7,37 @@ from numpy import average
 from Functions import *
 from Intersection import *
 
-img = cv2.imread('vloer2.png')
-gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+commando = "STANDARD"
+horizontalTreshold = 0.03 # slope
+stopTreshold = 0.5 # ratio screen
+adjustThreshold = 2 # degrees
 
+img = cv2.imread('image5.jpg')
 height, width, channels = img.shape
-print height, width, channels
+print "height =", height, ", width =", width
 
-i = 0;
-j = 100;
+# Perform line detection
+threshold1 = 0;
+threshold2 = 100;
+gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+edges = cv2.Canny(gray, threshold1, threshold2, apertureSize = 3)
+lines = cv2.HoughLinesP(edges, rho = 1, theta = 1*np.pi/1800, threshold = 200, minLineLength = 200, maxLineGap = 100)
 
-edges = cv2.Canny(gray,i,j,apertureSize = 3)
-
-lines = cv2.HoughLinesP(edges,rho = 1,theta = 1*np.pi/1800,threshold = 200,minLineLength = 200,maxLineGap = 100)
+# Edit the found lines
 lines_long = make_long_lines (lines, width, height)
+lines_single = merge_long_lines(img, lines_long)
 
-lines_single=merge_long_lines(img,lines_long)
+# Check what to do (stop, left, right)
+commando = calculateCommando(lines_single, img, height, width, horizontalTreshold, stopTreshold, adjustThreshold)
+print commando 
 
+#show image
+cv2.imshow('hough', img)
+cv2.waitKey(0)
+     
+        
 
-
+'''
 #afwijkende lijn weghalen
 arrayA=[]
 intersections=[]
@@ -57,21 +70,6 @@ for t in range(0,len(lines_single)):                                            
                 print intersectionPoint[0]
                 print intersectionPoint[1]
                 cv2.line(img,(intersectionPoint[0], intersectionPoint[1]), (intersectionPoint[0] + 2, intersectionPoint[1] + 2),(0,0,255),5)
-                
-            
-
-
+     
 print intersections[0].line1
-
-
-
-
-cv2.imshow('hough',img)
-cv2.waitKey(0)
-
-
-
-
-
-
-
+''' 

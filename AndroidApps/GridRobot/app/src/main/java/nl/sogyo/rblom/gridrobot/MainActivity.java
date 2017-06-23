@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MainActivity extends AppCompatActivity {
 
     ImageView[] selectedView = new ImageView[]{null};

@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     ImageView[] selectedView = new ImageView[]{null};
     ImageView[] robotLocation = new ImageView[]{null};
+    ImageView[][] tileGrid = new ImageView[7][7];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,18 +24,18 @@ public class MainActivity extends AppCompatActivity {
         ImageView turnButton = (ImageView) findViewById(R.id.turnButton);
         ImageView wastebinButton = (ImageView) findViewById(R.id.wastebinButton);
         ImageView flagButton = (ImageView) findViewById(R.id.flagButton);
+        ImageView goButton = (ImageView) findViewById(R.id.goButton);
 
-        final ImageView[][] tileGrid = new ImageView[7][7];
         tileGrid[0][0] = (ImageView) findViewById(R.id.imageView);
-        tileGrid[0][1] = (ImageView) findViewById(R.id.imageView2);
-        tileGrid[0][2] = (ImageView) findViewById(R.id.imageView3);
-        tileGrid[0][3] = (ImageView) findViewById(R.id.imageView4);
-        tileGrid[0][4] = (ImageView) findViewById(R.id.imageView5);
-        tileGrid[0][5] = (ImageView) findViewById(R.id.imageView6);
-        tileGrid[0][6] = (ImageView) findViewById(R.id.imageView7);
-        tileGrid[1][0] = (ImageView) findViewById(R.id.imageView8);
+        tileGrid[1][0] = (ImageView) findViewById(R.id.imageView2);
+        tileGrid[2][0] = (ImageView) findViewById(R.id.imageView3);
+        tileGrid[3][0] = (ImageView) findViewById(R.id.imageView4);
+        tileGrid[4][0] = (ImageView) findViewById(R.id.imageView5);
+        tileGrid[5][0] = (ImageView) findViewById(R.id.imageView6);
+        tileGrid[6][0] = (ImageView) findViewById(R.id.imageView7);
+        tileGrid[0][1] = (ImageView) findViewById(R.id.imageView8);
         tileGrid[1][1] = (ImageView) findViewById(R.id.imageView9);
-        tileGrid[1][2] = (ImageView) findViewById(R.id.imageView10);
+        tileGrid[2][1] = (ImageView) findViewById(R.id.imageView10);
 
         tankButton.setTag(R.drawable.tank_button_up);
         tankButton.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +127,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //List<int[]> shortestPath = findShortestPath();
+                List<int[]> shortestPath = new ArrayList<>();
+                shortestPath.add(new int[]{0, 1});
+                shortestPath.add(new int[]{0, 0});
+                shortestPath.add(new int[]{1, 0});
+                shortestPath.add(new int[]{2, 0});
+                shortestPath.add(new int[]{3, 0});
+                shortestPath.add(new int[]{4, 0});
+                markShortestPathGreen(shortestPath);
+            }
+        });
+
         tileGrid[0][0].setTag(R.drawable.tile);
         tileGrid[0][0].setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,84 +151,6 @@ public class MainActivity extends AppCompatActivity {
                     selectTile(tileGrid[0][0]);
                 } else {
                     deselectTile(tileGrid[0][0]);
-                }
-            }
-        });
-
-        tileGrid[0][1].setTag(R.drawable.tile);
-        tileGrid[0][1].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tileIsNotAlreadySelected(tileGrid[0][1])) {
-                    deselectTile(selectedView[0]);
-                    selectTile(tileGrid[0][1]);
-                } else {
-                    deselectTile(tileGrid[0][1]);
-                }
-            }
-        });
-
-        tileGrid[0][2].setTag(R.drawable.tile);
-        tileGrid[0][2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tileIsNotAlreadySelected(tileGrid[0][2])) {
-                    deselectTile(selectedView[0]);
-                    selectTile(tileGrid[0][2]);
-                } else {
-                    deselectTile(tileGrid[0][2]);
-                }
-            }
-        });
-
-        tileGrid[0][3].setTag(R.drawable.tile);
-        tileGrid[0][3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tileIsNotAlreadySelected(tileGrid[0][3])) {
-                    deselectTile(selectedView[0]);
-                    selectTile(tileGrid[0][3]);
-                } else {
-                    deselectTile(tileGrid[0][3]);
-                }
-            }
-        });
-
-        tileGrid[0][4].setTag(R.drawable.tile);
-        tileGrid[0][4].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tileIsNotAlreadySelected(tileGrid[0][4])) {
-                    deselectTile(selectedView[0]);
-                    selectTile(tileGrid[0][4]);
-                } else {
-                    deselectTile(tileGrid[0][4]);
-                }
-            }
-        });
-
-        tileGrid[0][5].setTag(R.drawable.tile);
-        tileGrid[0][5].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tileIsNotAlreadySelected(tileGrid[0][5])) {
-                    deselectTile(selectedView[0]);
-                    selectTile(tileGrid[0][5]);
-                } else {
-                    deselectTile(tileGrid[0][5]);
-                }
-            }
-        });
-
-        tileGrid[0][6].setTag(R.drawable.tile);
-        tileGrid[0][6].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tileIsNotAlreadySelected(tileGrid[0][6])) {
-                    deselectTile(selectedView[0]);
-                    selectTile(tileGrid[0][6]);
-                } else {
-                    deselectTile(tileGrid[0][6]);
                 }
             }
         });
@@ -227,6 +168,84 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        tileGrid[2][0].setTag(R.drawable.tile);
+        tileGrid[2][0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tileIsNotAlreadySelected(tileGrid[2][0])) {
+                    deselectTile(selectedView[0]);
+                    selectTile(tileGrid[2][0]);
+                } else {
+                    deselectTile(tileGrid[2][0]);
+                }
+            }
+        });
+
+        tileGrid[3][0].setTag(R.drawable.tile);
+        tileGrid[3][0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tileIsNotAlreadySelected(tileGrid[3][0])) {
+                    deselectTile(selectedView[0]);
+                    selectTile(tileGrid[3][0]);
+                } else {
+                    deselectTile(tileGrid[3][0]);
+                }
+            }
+        });
+
+        tileGrid[4][0].setTag(R.drawable.tile);
+        tileGrid[4][0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tileIsNotAlreadySelected(tileGrid[4][0])) {
+                    deselectTile(selectedView[0]);
+                    selectTile(tileGrid[4][0]);
+                } else {
+                    deselectTile(tileGrid[4][0]);
+                }
+            }
+        });
+
+        tileGrid[5][0].setTag(R.drawable.tile);
+        tileGrid[5][0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tileIsNotAlreadySelected(tileGrid[5][0])) {
+                    deselectTile(selectedView[0]);
+                    selectTile(tileGrid[5][0]);
+                } else {
+                    deselectTile(tileGrid[5][0]);
+                }
+            }
+        });
+
+        tileGrid[6][0].setTag(R.drawable.tile);
+        tileGrid[6][0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tileIsNotAlreadySelected(tileGrid[6][0])) {
+                    deselectTile(selectedView[0]);
+                    selectTile(tileGrid[6][0]);
+                } else {
+                    deselectTile(tileGrid[6][0]);
+                }
+            }
+        });
+
+        tileGrid[0][1].setTag(R.drawable.tile);
+        tileGrid[0][1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tileIsNotAlreadySelected(tileGrid[0][1])) {
+                    deselectTile(selectedView[0]);
+                    selectTile(tileGrid[0][1]);
+                } else {
+                    deselectTile(tileGrid[0][1]);
+                }
+            }
+        });
+
         tileGrid[1][1].setTag(R.drawable.tile);
         tileGrid[1][1].setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,15 +259,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tileGrid[1][2].setTag(R.drawable.tile);
-        tileGrid[1][2].setOnClickListener(new View.OnClickListener() {
+        tileGrid[2][1].setTag(R.drawable.tile);
+        tileGrid[2][1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tileIsNotAlreadySelected(tileGrid[1][2])) {
+                if (tileIsNotAlreadySelected(tileGrid[2][1])) {
                     deselectTile(selectedView[0]);
-                    selectTile(tileGrid[1][2]);
+                    selectTile(tileGrid[2][1]);
                 } else {
-                    deselectTile(tileGrid[1][2]);
+                    deselectTile(tileGrid[2][1]);
                 }
             }
         });
@@ -342,5 +361,64 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean selectedTileIsRobotLocation() {
         return (selectedView[0] == robotLocation[0]);
+    }
+
+    private void markShortestPathGreen(List<int[]> shortestPath) {
+        for (int[] coordinates: shortestPath) {
+            changeTileImageToGreen(tileGrid[coordinates[0]][coordinates[1]]);
+            System.out.println(coordinates[0] + ", " + coordinates[1]);
+        }
+    }
+
+    private void changeTileImageToGreen(ImageView imageView) {
+        if (imageView == null) {
+            System.out.println("imageView is null");
+        } else {
+            int drawableID = 0;
+            switch ((int) imageView.getTag()) {
+                case R.drawable.tile:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile);
+                    break;
+                case R.drawable.tile_tank_up:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_up);
+                    break;
+                case R.drawable.tile_tank_right:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_right);
+                    break;
+                case R.drawable.tile_tank_down:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_down);
+                    break;
+                case R.drawable.tile_tank_left:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_left);
+                    break;
+                case R.drawable.tile_flag:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile_flag);
+                    break;
+                case R.drawable.selected_tile:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile);
+                    selectedView[0] = null;
+                    break;
+                case R.drawable.selected_tile_tank_up:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_up);
+                    selectedView[0] = null;
+                    break;
+                case R.drawable.selected_tile_tank_right:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_right);
+                    selectedView[0] = null;
+                    break;
+                case R.drawable.selected_tile_tank_down:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_down);
+                    selectedView[0] = null;
+                    break;
+                case R.drawable.selected_tile_tank_left:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_left);
+                    selectedView[0] = null;
+                    break;
+                case R.drawable.selected_tile_flag:
+                    imageView.setImageResource(drawableID = R.drawable.green_tile_flag);
+                    selectedView[0] = null;
+            }
+            imageView.setTag(drawableID);
+        }
     }
 }

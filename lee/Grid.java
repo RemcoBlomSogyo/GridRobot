@@ -28,9 +28,15 @@ class Grid{
 	
 	private static boolean isInList(
 	        final List<int[]> list, final int[] candidate) {
+		
+		for (int[] item : list){
+			if (Arrays.equals(item, candidate)){
+				return true;
+			}
+				
+		}
+		return false;
 
-	    return list.stream().anyMatch(a -> Arrays.equals(a, candidate));
-	            //  ^-- or you may want to use .parallelStream() here instead
 	}
 	
 	public int getxDimension(){

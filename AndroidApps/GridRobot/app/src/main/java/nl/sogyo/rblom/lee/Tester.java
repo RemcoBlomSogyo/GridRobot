@@ -1,5 +1,4 @@
-package lee;
-
+package nl.sogyo.rblom.lee;
 
 
 import java.util.ArrayList;

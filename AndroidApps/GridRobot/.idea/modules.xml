@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GridRobot.iml" filepath="$PROJECT_DIR$/GridRobot.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Lee/Lee.iml" filepath="$PROJECT_DIR$/Lee/Lee.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
     </modules>

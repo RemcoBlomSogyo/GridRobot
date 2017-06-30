@@ -1,4 +1,4 @@
-package lee;
+package nl.sogyo.rblom.lee;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,12 +25,18 @@ class Grid{
 		}
 		
 	}
-	
-	private static boolean isInList(
-	        final List<int[]> list, final int[] candidate) {
 
-	    return list.stream().anyMatch(a -> Arrays.equals(a, candidate));
-	            //  ^-- or you may want to use .parallelStream() here instead
+	private static boolean isInList(
+	final List<int[]> list, final int[] candidate) {
+
+		for (int[] item : list){
+			if (Arrays.equals(item, candidate)){
+				return true;
+			}
+
+		}
+		return false;
+
 	}
 	
 	public int getxDimension(){

@@ -1,5 +1,0 @@
-configurations.maybeCreate("default")
-artifacts.add("default", file('Lee.jar'))
-dependencies {
-    compile files('Lee.jar')
-}

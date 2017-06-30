@@ -8,11 +8,14 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.sogyo.rblom.lee.ShortestPath;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageView[] selectedView = new ImageView[]{null};
     ImageView[] robotLocation = new ImageView[]{null};
+    ImageView[] flagLocation = new ImageView[]{null};
+    ArrayList<ImageView> obstacleLocations = new ArrayList<>();
     ImageView[][] tileGrid = new ImageView[7][7];
 
     @Override
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     selectedView[0].setImageResource(R.drawable.selected_tile_access_denied);
                     selectedView[0].setTag(R.drawable.selected_tile_access_denied);
+                    if ()
                 }
             }
         });
@@ -132,14 +136,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //List<int[]> shortestPath = findShortestPath();
-                List<int[]> shortestPath = new ArrayList<>();
-                shortestPath.add(new int[]{0, 1});
-                shortestPath.add(new int[]{0, 0});
-                shortestPath.add(new int[]{1, 0});
-                shortestPath.add(new int[]{2, 0});
-                shortestPath.add(new int[]{3, 0});
-                shortestPath.add(new int[]{4, 0});
-                markShortestPathGreen(shortestPath);
+//                List<int[]> shortestPath = new ArrayList<>();
+//                shortestPath.add(new int[]{0, 1});
+//                shortestPath.add(new int[]{0, 0});
+//                shortestPath.add(new int[]{1, 0});
+//                shortestPath.add(new int[]{2, 0});
+//                shortestPath.add(new int[]{3, 0});
+//                shortestPath.add(new int[]{4, 0});
+//                markShortestPathGreen(shortestPath);
+
+                int[] robot = new int[]{0, 0};
+                int[] flag = new int[]{6, 0};
+                calculateShortestPath(robot, flag);
             }
         });
 
@@ -362,6 +370,12 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean selectedTileIsRobotLocation() {
         return (selectedView[0] == robotLocation[0]);
+    }
+
+    private void calculateShortestPath(int[] coordinatesRobot, int[]coordinatesFlag) {
+        ShortestPath shortestPath = new ShortestPath();
+        List<int[]> shortestPathCoordinates = shortestPath.pathComputer(coordinatesRobot, coordinatesFlag);
+        markShortestPathGreen(shortestPathCoordinates);
     }
 
     private void markShortestPathGreen(List<int[]> shortestPath) {

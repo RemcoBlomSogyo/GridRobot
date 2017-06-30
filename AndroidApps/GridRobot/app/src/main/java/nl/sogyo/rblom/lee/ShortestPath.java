@@ -1,4 +1,4 @@
-package lee;
+package nl.sogyo.rblom.lee;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,11 @@ public class ShortestPath {
 	private ArrayList<Vakje> path = new ArrayList<Vakje>();
 	private Vakje flag;
 	private Vakje robot;
+
+	public List<int[]> pathComputer(int[] robot, int[] flag){
+		ArrayList<int[]> obstacles = new ArrayList<int[]>();
+		return pathComputer(robot,flag,obstacles);
+	}
 	
 	public List<int[]> pathComputer(int[] robot, int[] flag, ArrayList<int[]> obstacles){
 		System.out.println("Initializing...");

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (aTileIsSelected()) {
                     deletePreviousRobotLocation();
+                    clearTileAndDeleteLocation();
                     switch ((int) tankButton.getTag()) {
                         case R.drawable.tank_button_up:
                             selectedView[0].setImageResource(R.drawable.selected_tile_tank_up);
@@ -78,7 +79,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     selectedView[0].setImageResource(R.drawable.selected_tile_access_denied);
                     selectedView[0].setTag(R.drawable.selected_tile_access_denied);
-                    if ()
+                    if (!selectedTileIsAnObstacleLocation()) {
+                        obstacleLocations.add(selectedView[0]);
+                    }
                 }
             }
         });
@@ -112,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
                 if (aTileIsSelected()) {
                     if (selectedTileIsRobotLocation()) {
                         robotLocation[0] = null;
+                    } else if (selectedTileIsFlagLocation()) {
+                        flagLocation[0] = null;
+                    } else if (selectedTileIsAnObstacleLocation()) {
+                        obstacleLocations.remove(selectedView[0]);
                     }
                     selectedView[0].setImageResource(R.drawable.selected_tile);
                     selectedView[0].setTag(R.drawable.selected_tile);
@@ -123,11 +130,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (aTileIsSelected()) {
+                    deletePreviousFlagLocation();
                     if (selectedTileIsRobotLocation()) {
                         robotLocation[0] = null;
                     }
                     selectedView[0].setImageResource(R.drawable.selected_tile_flag);
                     selectedView[0].setTag(R.drawable.selected_tile_flag);
+                    flagLocation[0] = selectedView[0];
                 }
             }
         });
@@ -368,8 +377,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void deletePreviousFlagLocation() {
+        if (flagLocation[0] != null) {
+            flagLocation[0].setImageResource(R.drawable.tile);
+            flagLocation[0].setTag(R.drawable.tile);
+            flagLocation[0] = null;
+        }
+    }
+
+    private void clearTileAndDeleteLocation() {
+        selectedView[0].setImageResource(R.drawable.selected_tile);
+        selectedView[0].setTag(R.drawable.selected_tile);
+        if (selectedTileIsRobotLocation()) {
+            robotLocation[0] = null;
+        } else if (selectedTileIsFlagLocation()) {
+            /////////////
+        } else if (selectedTileIsAnObstacleLocation()) {
+            ///////////
+        }
+    }
+
     private boolean selectedTileIsRobotLocation() {
         return (selectedView[0] == robotLocation[0]);
+    }
+
+    private boolean selectedTileIsFlagLocation() {
+        return (selectedView[0] == flagLocation[0]);
+    }
+
+    private boolean selectedTileIsAnObstacleLocation() {
+        return (obstacleLocations.contains(selectedView[0]));
     }
 
     private void calculateShortestPath(int[] coordinatesRobot, int[]coordinatesFlag) {

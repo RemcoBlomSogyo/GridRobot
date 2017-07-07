@@ -8,12 +8,14 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.sogyo.rblom.lee.CommandLine;
 import nl.sogyo.rblom.lee.ShortestPath;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageView[] selectedView = new ImageView[]{null};
     ImageView[] robotLocation = new ImageView[]{null};
+    String robotDirection = null;
     ImageView[] flagLocation = new ImageView[]{null};
     ArrayList<ImageView> obstacleLocations = new ArrayList<>();
     ImageView[][] tileGrid = new ImageView[7][7];
@@ -91,18 +93,22 @@ public class MainActivity extends AppCompatActivity {
                         case R.drawable.tank_button_up:
                             selectedView[0].setImageResource(R.drawable.selected_tile_tank_up);
                             selectedView[0].setTag(R.drawable.selected_tile_tank_up);
+                            robotDirection = "north";
                             break;
                         case R.drawable.tank_button_right:
                             selectedView[0].setImageResource(R.drawable.selected_tile_tank_right);
                             selectedView[0].setTag(R.drawable.selected_tile_tank_right);
+                            robotDirection = "east";
                             break;
                         case R.drawable.tank_button_down:
                             selectedView[0].setImageResource(R.drawable.selected_tile_tank_down);
                             selectedView[0].setTag(R.drawable.selected_tile_tank_down);
+                            robotDirection = "south";
                             break;
                         case R.drawable.tank_button_left:
                             selectedView[0].setImageResource(R.drawable.selected_tile_tank_left);
                             selectedView[0].setTag(R.drawable.selected_tile_tank_left);
+                            robotDirection = "west";
                     }
                     robotLocation[0] = selectedView[0];
                 }
@@ -194,7 +200,20 @@ public class MainActivity extends AppCompatActivity {
 
                 int[] robot = new int[]{0, 0};
                 int[] flag = new int[]{6, 0};
-                calculateShortestPath(robot, flag);
+
+                if (robotLocation[0] != null && flagLocation[0] != null) {
+                    int[] robotCoordinates = parseImageViewToCoordinates(robotLocation[0]);
+                    int[] flagCoordinates = parseImageViewToCoordinates(flagLocation[0]);
+                    ArrayList<int[]> obstaclesCoordinates = new ArrayList<>();
+                    for (ImageView obstacleLocation : obstacleLocations) {
+                        obstaclesCoordinates.add(parseImageViewToCoordinates(obstacleLocation));
+                    }
+                    ArrayList<int[]> shortestPathCoordinates = calculateShortestPath(robotCoordinates, flagCoordinates, obstaclesCoordinates);
+                    CommandLine commandLine = new CommandLine();
+                    String commandsForRobot = commandLine.computeLine(shortestPathCoordinates, robotDirection);
+
+                    sendCommandsToRobot(commandsForRobot);
+                }
             }
         });
 
@@ -479,10 +498,16 @@ public class MainActivity extends AppCompatActivity {
         return (obstacleLocations.contains(selectedView[0]));
     }
 
-    private void calculateShortestPath(int[] coordinatesRobot, int[]coordinatesFlag) {
+    private ArrayList<int[]> calculateShortestPath(int[] coordinatesRobot, int[]coordinatesFlag, ArrayList<int[]> coordinatesObstacles) {
         ShortestPath shortestPath = new ShortestPath();
-        List<int[]> shortestPathCoordinates = shortestPath.pathComputer(coordinatesRobot, coordinatesFlag);
+        ArrayList<int[]> shortestPathCoordinates;
+        if (coordinatesObstacles.isEmpty()) {
+            shortestPathCoordinates = shortestPath.pathComputer(coordinatesRobot, coordinatesFlag);
+        } else {
+            shortestPathCoordinates = shortestPath.pathComputer(coordinatesRobot, coordinatesFlag, coordinatesObstacles);
+        }
         markShortestPathGreen(shortestPathCoordinates);
+        return shortestPathCoordinates;
     }
 
     private void markShortestPathGreen(List<int[]> shortestPath) {
@@ -549,5 +574,22 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("flagLocation: " + (flagLocation[0] != null));
         System.out.println("obstacleLocations: " + obstacleLocations.size());
         System.out.println();
+    }
+
+    private int[] parseImageViewToCoordinates(ImageView imageView) {
+        for (int y = 0 ; y < 7 ; y++) {
+            for (int x = 0 ; x < 7 ; x++) {
+                if (imageView == tileGrid[x][y]) {
+                    return new int[]{x, y};
+                }
+            }
+        }
+        // this code will never be reached
+        return new int[]{0,0};
+    }
+
+    private void sendCommandsToRobot(String commandsForRobot) {
+        CommandsSender sender = new CommandsSender();
+        sender.execute(commandsForRobot);
     }
 }

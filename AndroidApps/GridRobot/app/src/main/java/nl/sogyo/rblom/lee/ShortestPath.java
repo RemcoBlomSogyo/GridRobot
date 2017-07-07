@@ -8,13 +8,19 @@ public class ShortestPath {
 	private ArrayList<Vakje> path = new ArrayList<Vakje>();
 	private Vakje flag;
 	private Vakje robot;
-
-	public List<int[]> pathComputer(int[] robot, int[] flag){
+	
+	
+	ArrayList<Vakje> getPath(){
+		return path;
+	}
+	
+	public ArrayList<int[]> pathComputer(int[] robot, int[] flag){
 		ArrayList<int[]> obstacles = new ArrayList<int[]>();
 		return pathComputer(robot,flag,obstacles);
 	}
 	
-	public List<int[]> pathComputer(int[] robot, int[] flag, ArrayList<int[]> obstacles){
+	
+	public ArrayList<int[]> pathComputer(int[] robot, int[] flag, ArrayList<int[]> obstacles){
 		System.out.println("Initializing...");
 		initialization(robot,flag,obstacles);
 		System.out.println("Wave Expanding...");
@@ -25,8 +31,10 @@ public class ShortestPath {
 		return pathConvert(); 
 	}
 	
-	private List<int[]> pathConvert() {
-		List<int[]> finalPath = new ArrayList<int[]>();
+
+
+	private ArrayList<int[]> pathConvert() {
+		ArrayList<int[]> finalPath = new ArrayList<int[]>();
 		for (Vakje vakje : path){
 			finalPath.add(new int[]{vakje.getx(),vakje.gety()});
 		}
@@ -49,8 +57,8 @@ public class ShortestPath {
 			markNeighbours(wave);
 			wave++;
 		}
-	}	
-
+	}
+	
 	private boolean validNeighbours(int waveNumber) {
 		for (Vakje vakje: grid.content){
 			if (vakje.getValue() == waveNumber){

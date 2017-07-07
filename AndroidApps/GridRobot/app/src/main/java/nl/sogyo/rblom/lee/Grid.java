@@ -25,15 +25,15 @@ class Grid{
 		}
 		
 	}
-
+	
 	private static boolean isInList(
-	final List<int[]> list, final int[] candidate) {
-
+	        final List<int[]> list, final int[] candidate) {
+		
 		for (int[] item : list){
 			if (Arrays.equals(item, candidate)){
 				return true;
 			}
-
+				
 		}
 		return false;
 

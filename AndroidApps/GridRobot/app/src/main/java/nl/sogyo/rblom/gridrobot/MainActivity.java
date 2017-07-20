@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import nl.sogyo.rblom.lee.CommandLine;
@@ -198,8 +199,8 @@ public class MainActivity extends AppCompatActivity {
 //                shortestPath.add(new int[]{4, 0});
 //                markShortestPathGreen(shortestPath);
 
-                int[] robot = new int[]{0, 0};
-                int[] flag = new int[]{6, 0};
+//                int[] robot = new int[]{0, 0};
+//                int[] flag = new int[]{6, 0};
 
                 if (robotLocation[0] != null && flagLocation[0] != null) {
                     int[] robotCoordinates = parseImageViewToCoordinates(robotLocation[0]);
@@ -506,6 +507,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             shortestPathCoordinates = shortestPath.pathComputer(coordinatesRobot, coordinatesFlag, coordinatesObstacles);
         }
+        Collections.reverse(shortestPathCoordinates);
         markShortestPathGreen(shortestPathCoordinates);
         return shortestPathCoordinates;
     }
@@ -589,6 +591,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendCommandsToRobot(String commandsForRobot) {
+        System.out.println("sencCommandsToRobot: " + commandsForRobot);
         CommandsSender sender = new CommandsSender();
         sender.execute(commandsForRobot);
     }

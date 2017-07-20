@@ -14,12 +14,12 @@ import nl.sogyo.rblom.lee.ShortestPath;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView[] selectedView = new ImageView[]{null};
-    ImageView[] robotLocation = new ImageView[]{null};
-    String robotDirection = null;
-    ImageView[] flagLocation = new ImageView[]{null};
-    ArrayList<ImageView> obstacleLocations = new ArrayList<>();
-    ImageView[][] tileGrid = new ImageView[7][7];
+    private ImageView[] selectedView = new ImageView[]{null};
+    private ImageView[] robotLocation = new ImageView[]{null};
+    private String robotDirection = null;
+    private ImageView[] flagLocation = new ImageView[]{null};
+    private ArrayList<ImageView> obstacleLocations = new ArrayList<>();
+    private ImageView[][] tileGrid = new ImageView[7][7];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -380,55 +380,51 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeTileImageToGreen(ImageView imageView) {
-        if (imageView == null) {
-            System.out.println("imageView is null");
-        } else {
-            int drawableID = 0;
-            switch ((int) imageView.getTag()) {
-                case R.drawable.tile:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile);
-                    break;
-                case R.drawable.tile_tank_up:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_up);
-                    break;
-                case R.drawable.tile_tank_right:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_right);
-                    break;
-                case R.drawable.tile_tank_down:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_down);
-                    break;
-                case R.drawable.tile_tank_left:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_left);
-                    break;
-                case R.drawable.tile_flag:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile_flag);
-                    break;
-                case R.drawable.selected_tile:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile);
-                    selectedView[0] = null;
-                    break;
-                case R.drawable.selected_tile_tank_up:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_up);
-                    selectedView[0] = null;
-                    break;
-                case R.drawable.selected_tile_tank_right:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_right);
-                    selectedView[0] = null;
-                    break;
-                case R.drawable.selected_tile_tank_down:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_down);
-                    selectedView[0] = null;
-                    break;
-                case R.drawable.selected_tile_tank_left:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile_tank_left);
-                    selectedView[0] = null;
-                    break;
-                case R.drawable.selected_tile_flag:
-                    imageView.setImageResource(drawableID = R.drawable.green_tile_flag);
-                    selectedView[0] = null;
-            }
-            imageView.setTag(drawableID);
+        int drawableID = 0;
+        switch ((int) imageView.getTag()) {
+            case R.drawable.tile:
+                imageView.setImageResource(drawableID = R.drawable.green_tile);
+                break;
+            case R.drawable.tile_tank_up:
+                imageView.setImageResource(drawableID = R.drawable.green_tile_tank_up);
+                break;
+            case R.drawable.tile_tank_right:
+                imageView.setImageResource(drawableID = R.drawable.green_tile_tank_right);
+                break;
+            case R.drawable.tile_tank_down:
+                imageView.setImageResource(drawableID = R.drawable.green_tile_tank_down);
+                break;
+            case R.drawable.tile_tank_left:
+                imageView.setImageResource(drawableID = R.drawable.green_tile_tank_left);
+                break;
+            case R.drawable.tile_flag:
+                imageView.setImageResource(drawableID = R.drawable.green_tile_flag);
+                break;
+            case R.drawable.selected_tile:
+                imageView.setImageResource(drawableID = R.drawable.green_tile);
+                selectedView[0] = null;
+                break;
+            case R.drawable.selected_tile_tank_up:
+                imageView.setImageResource(drawableID = R.drawable.green_tile_tank_up);
+                selectedView[0] = null;
+                break;
+            case R.drawable.selected_tile_tank_right:
+                imageView.setImageResource(drawableID = R.drawable.green_tile_tank_right);
+                selectedView[0] = null;
+                break;
+            case R.drawable.selected_tile_tank_down:
+                imageView.setImageResource(drawableID = R.drawable.green_tile_tank_down);
+                selectedView[0] = null;
+                break;
+            case R.drawable.selected_tile_tank_left:
+                imageView.setImageResource(drawableID = R.drawable.green_tile_tank_left);
+                selectedView[0] = null;
+                break;
+            case R.drawable.selected_tile_flag:
+                imageView.setImageResource(drawableID = R.drawable.green_tile_flag);
+                selectedView[0] = null;
         }
+        imageView.setTag(drawableID);
     }
 
     private int[] parseImageViewToCoordinates(ImageView imageView) {

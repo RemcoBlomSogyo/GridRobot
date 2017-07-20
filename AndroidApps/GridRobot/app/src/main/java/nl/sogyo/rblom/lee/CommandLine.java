@@ -86,16 +86,20 @@ public class CommandLine {
 		int ycurrent = path.get(i)[1];
 		int xnext = path.get(i+1)[0];
 		int ynext = path.get(i+1)[1];
-		if (xcurrent>xnext){
+		if (xcurrent<xnext){
+			System.out.println("east");
 			return "east";
 		}
-		if (xcurrent<xnext){
+		if (xcurrent>xnext){
+			System.out.println("west");
 			return "west";
 		}
-		if (ycurrent>ynext){
+		if (ycurrent<ynext){
+			System.out.println("south");
 			return "south";
 			
 		}else{
+			System.out.println("north");
 			return "north";
 		}
 	}

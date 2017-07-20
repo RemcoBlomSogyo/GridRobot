@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         ImageView turnButton = (ImageView) findViewById(R.id.turnButton);
         ImageView wastebinButton = (ImageView) findViewById(R.id.wastebinButton);
         ImageView flagButton = (ImageView) findViewById(R.id.flagButton);
-        ImageView goButton = (ImageView) findViewById(R.id.goButton);
+        final ImageView goButton = (ImageView) findViewById(R.id.goButton);
+        ImageView newButton = (ImageView) findViewById(R.id.newButton);
 
         tileGrid[0][0] = (ImageView) findViewById(R.id.imageView);
         tileGrid[1][0] = (ImageView) findViewById(R.id.imageView2);
@@ -113,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     robotLocation[0] = selectedView[0];
                 }
-                printLocations();
             }
         });
 
@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
                         obstacleLocations.add(selectedView[0]);
                     }
                 }
-                printLocations();
             }
         });
 
@@ -155,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
                         tankButton.setImageResource(R.drawable.tank_button_up);
                         tankButton.setTag(R.drawable.tank_button_up);
                 }
-                printLocations();
             }
         });
 
@@ -165,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                 if (aTileIsSelected()) {
                     clearTileAndDeleteLocation();
                 }
-                printLocations();
             }
         });
 
@@ -182,26 +179,12 @@ public class MainActivity extends AppCompatActivity {
                     selectedView[0].setTag(R.drawable.selected_tile_flag);
                     flagLocation[0] = selectedView[0];
                 }
-                printLocations();
             }
         });
 
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //List<int[]> shortestPath = findShortestPath();
-//                List<int[]> shortestPath = new ArrayList<>();
-//                shortestPath.add(new int[]{0, 1});
-//                shortestPath.add(new int[]{0, 0});
-//                shortestPath.add(new int[]{1, 0});
-//                shortestPath.add(new int[]{2, 0});
-//                shortestPath.add(new int[]{3, 0});
-//                shortestPath.add(new int[]{4, 0});
-//                markShortestPathGreen(shortestPath);
-
-//                int[] robot = new int[]{0, 0};
-//                int[] flag = new int[]{6, 0};
-
                 if (robotLocation[0] != null && flagLocation[0] != null) {
                     int[] robotCoordinates = parseImageViewToCoordinates(robotLocation[0]);
                     int[] flagCoordinates = parseImageViewToCoordinates(flagLocation[0]);
@@ -214,6 +197,27 @@ public class MainActivity extends AppCompatActivity {
                     String commandsForRobot = commandLine.computeLine(shortestPathCoordinates, robotDirection);
 
                     sendCommandsToRobot(commandsForRobot);
+                    goButton.setImageResource(R.drawable.green_go_button);
+                }
+            }
+        });
+
+        newButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goButton.setImageResource(R.drawable.go_button);
+
+                selectedView[0] = null;
+                robotLocation[0] = null;
+                robotDirection = null;
+                flagLocation[0] = null;
+                obstacleLocations.clear();
+
+                for (int y = 0 ; y < 7 ; y++) {
+                    for (int x = 0 ; x < 7 ; x++) {
+                        tileGrid[x][y].setImageResource(R.drawable.tile);
+                        tileGrid[x][y].setTag(R.drawable.tile);
+                    }
                 }
             }
         });
@@ -236,149 +240,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }
-
-//        tileGrid[0][0].setTag(R.drawable.tile);
-//        tileGrid[0][0].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (tileIsNotAlreadySelected(tileGrid[0][0])) {
-//                    deselectTile(selectedView[0]);
-//                    selectTile(tileGrid[0][0]);
-//                } else {
-//                    deselectTile(tileGrid[0][0]);
-//                }
-//            }
-//        });
-//
-//        tileGrid[1][0].setTag(R.drawable.tile);
-//        tileGrid[1][0].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (tileIsNotAlreadySelected(tileGrid[1][0])) {
-//                    deselectTile(selectedView[0]);
-//                    selectTile(tileGrid[1][0]);
-//                } else {
-//                    deselectTile(tileGrid[1][0]);
-//                }
-//            }
-//        });
-//
-//        tileGrid[2][0].setTag(R.drawable.tile);
-//        tileGrid[2][0].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (tileIsNotAlreadySelected(tileGrid[2][0])) {
-//                    deselectTile(selectedView[0]);
-//                    selectTile(tileGrid[2][0]);
-//                } else {
-//                    deselectTile(tileGrid[2][0]);
-//                }
-//            }
-//        });
-//
-//        tileGrid[3][0].setTag(R.drawable.tile);
-//        tileGrid[3][0].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (tileIsNotAlreadySelected(tileGrid[3][0])) {
-//                    deselectTile(selectedView[0]);
-//                    selectTile(tileGrid[3][0]);
-//                } else {
-//                    deselectTile(tileGrid[3][0]);
-//                }
-//            }
-//        });
-//
-//        tileGrid[4][0].setTag(R.drawable.tile);
-//        tileGrid[4][0].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (tileIsNotAlreadySelected(tileGrid[4][0])) {
-//                    deselectTile(selectedView[0]);
-//                    selectTile(tileGrid[4][0]);
-//                } else {
-//                    deselectTile(tileGrid[4][0]);
-//                }
-//            }
-//        });
-//
-//        tileGrid[5][0].setTag(R.drawable.tile);
-//        tileGrid[5][0].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (tileIsNotAlreadySelected(tileGrid[5][0])) {
-//                    deselectTile(selectedView[0]);
-//                    selectTile(tileGrid[5][0]);
-//                } else {
-//                    deselectTile(tileGrid[5][0]);
-//                }
-//            }
-//        });
-//
-//        tileGrid[6][0].setTag(R.drawable.tile);
-//        tileGrid[6][0].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (tileIsNotAlreadySelected(tileGrid[6][0])) {
-//                    deselectTile(selectedView[0]);
-//                    selectTile(tileGrid[6][0]);
-//                } else {
-//                    deselectTile(tileGrid[6][0]);
-//                }
-//            }
-//        });
-//
-//        tileGrid[0][1].setTag(R.drawable.tile);
-//        tileGrid[0][1].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (tileIsNotAlreadySelected(tileGrid[0][1])) {
-//                    deselectTile(selectedView[0]);
-//                    selectTile(tileGrid[0][1]);
-//                } else {
-//                    deselectTile(tileGrid[0][1]);
-//                }
-//            }
-//        });
-//
-//        tileGrid[1][1].setTag(R.drawable.tile);
-//        tileGrid[1][1].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (tileIsNotAlreadySelected(tileGrid[1][1])) {
-//                    deselectTile(selectedView[0]);
-//                    selectTile(tileGrid[1][1]);
-//                } else {
-//                    deselectTile(tileGrid[1][1]);
-//                }
-//            }
-//        });
-//
-//        tileGrid[2][1].setTag(R.drawable.tile);
-//        tileGrid[2][1].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (tileIsNotAlreadySelected(tileGrid[2][1])) {
-//                    deselectTile(selectedView[0]);
-//                    selectTile(tileGrid[2][1]);
-//                } else {
-//                    deselectTile(tileGrid[2][1]);
-//                }
-//            }
-//        });
-//
-//        tileGrid[2][1].setTag(R.drawable.tile);
-//        tileGrid[2][1].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (tileIsNotAlreadySelected(tileGrid[2][1])) {
-//                    deselectTile(selectedView[0]);
-//                    selectTile(tileGrid[2][1]);
-//                } else {
-//                    deselectTile(tileGrid[2][1]);
-//                }
-//            }
-//        });
     }
 
     private void deselectTile(ImageView imageView) {
@@ -515,7 +376,6 @@ public class MainActivity extends AppCompatActivity {
     private void markShortestPathGreen(List<int[]> shortestPath) {
         for (int[] coordinates: shortestPath) {
             changeTileImageToGreen(tileGrid[coordinates[0]][coordinates[1]]);
-            System.out.println(coordinates[0] + ", " + coordinates[1]);
         }
     }
 
@@ -571,13 +431,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void printLocations() {
-        System.out.println("robotLocation: " + (robotLocation[0] != null));
-        System.out.println("flagLocation: " + (flagLocation[0] != null));
-        System.out.println("obstacleLocations: " + obstacleLocations.size());
-        System.out.println();
-    }
-
     private int[] parseImageViewToCoordinates(ImageView imageView) {
         for (int y = 0 ; y < 7 ; y++) {
             for (int x = 0 ; x < 7 ; x++) {
@@ -591,7 +444,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendCommandsToRobot(String commandsForRobot) {
-        System.out.println("sencCommandsToRobot: " + commandsForRobot);
         CommandsSender sender = new CommandsSender();
         sender.execute(commandsForRobot);
     }

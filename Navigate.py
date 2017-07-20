@@ -99,7 +99,8 @@ def correct():
         
         
 def calculateTimeSpeedFromDegrees(degrees):
-    time = float(0.08*degrees)
+    #time = float(0.08*degrees)
+    time = float(0.06*degrees)
     speed = 20
     return (time, speed)
 

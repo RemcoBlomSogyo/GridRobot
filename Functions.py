@@ -8,6 +8,8 @@ from Line import *
 
 def make_long_lines (lines, width, height):
     lines_long=[]
+    if lines is None:
+        return "No lines found"
     for x in range(0, len(lines)):
         for x1,y1,x2,y2 in lines[x]:
             a=(float(y2)-float(y1))/(float(x2)-float(x1))
@@ -100,20 +102,18 @@ def checkStraight(lines, img, horizontalTreshold, adjustThreshold):
     
     cv2.line(img,(int(lineAMin.getA()[0]), int(lineAMin.getA()[1])),(int(lineAMin.getB()[0]), int(lineAMin.getB()[1])),(0,0,255),2)
     lineAMin.draw(img, 255, 255, 255);
-    cv2.imwrite("Images/image2.jpg", img)
+    cv2.imwrite("horizontal.jpg", img)
     
     degrees = lineAMin.getDegrees()
-    if AMin > horizontalTreshold and degrees > adjustThreshold:
-        if lineAMin.getSlope() > 0:
+    if degrees > adjustThreshold:    # AMin > horizontalTreshold and
+        #print lineAMin.getSlope()
+        if lineAMin.getSlope() < 0:
             commando = "LEFT"
-            print("LEFT" + str(degrees));
         else:
             commando = "RIGHT"
-            print("RIGHT" + str(degrees));
     else:
         commando = None
-        print("NONE");
-    return (commando, degrees)
+    return (commando, degrees, lineAMin)
 
 def calculateCommando(lines, img, height, width, horizontalTreshold, stopTreshold, adjustThreshold):
     commando = ""
@@ -140,6 +140,7 @@ def line_intersection(line1, line2, width, height):
         return None;
 
     return int(x), int(y)
+
 
 
 

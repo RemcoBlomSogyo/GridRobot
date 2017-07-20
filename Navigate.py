@@ -12,16 +12,15 @@ from Functions import *
 
 
 def left(deltaTime, speed):
-    print("in left")
+    #requests.post("http://10.10.4.236:5000/correctLeft/8505/20/")
     requests.post("http://10.10.4.236:5000/correctLeft/" 
-                  + str(deltaTime*1000) + "/" 
+                  + str(int(deltaTime*1000)) + "/" 
                   + str(speed) + "/")
 
 def right(deltaTime, speed):
-    print("in right")
     requests.post("http://10.10.4.236:5000/correctRight/" 
-                  + str(deltaTime*1000) + "/" 
-                  + str(speed) + "/")
+                  + str(int(deltaTime*1000)) + "/" 
+                  + str(int(speed)) + "/")
 
 def correct():
     #camera = PiCamera()
@@ -41,36 +40,66 @@ def correct():
     threshold1 = 0;
     threshold2 = 100;
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-    print("GRAY DONE")
     edges = cv2.Canny(gray, threshold1, threshold2, apertureSize = 3)
-    print("CANNY DONE")
     lines = cv2.HoughLinesP(edges, rho = 1, theta = 1*np.pi/1800,
-                            threshold = 200, minLineLength = 200,
+                            threshold = 200, minLineLength = 120,
                             maxLineGap = 100)
-    print("HOUGH LINES DONE")
     
     # Edit the found lines
     lines_long = make_long_lines (lines, width, height)
-    print("MAKE LONG LINES DONE")
+    if str(lines_long) == "No lines found":
+        return "No lines found"
     lines_single = merge_long_lines(img, lines_long)
-    print("MERGE LINE DONE")
 
-    (commando, degrees) = checkStraight(lines_single, img,
+    (commando, degrees, horizontalLine) = checkStraight(lines_single, img,
                                       horizontalTreshold,
                                       adjustThreshold)
-    print("CHECKED STRAIGHT DONE");
     
-    print(commando)
-    if (commando == "LEFT"):
-        (deltaTime, speed) = calculateTimeSpeedFromDegrees(degrees);
-        left(deltaTime, speed)
-    elif (commando == "RIGHT"):
-        (deltaTime, speed) = calculateTimeSpeedFromDegrees(degrees);
-        right(deltaTime, speed)
+    Ycoordinate= (horizontalLine.A[1]+horizontalLine.B[1])/2
+    relativeHeight = Ycoordinate/height
+    
+    upperTreshold=0.8
+    lowerTreshold=0.9
+    
+    returnCommando="None"
+    
+    if relativeHeight<upperTreshold:
+        print "Correcting forward"
+        requests.post('http://10.10.4.236:5000/forward/300/20/')
+        returnCommando="correcting"
+    elif relativeHeight>lowerTreshold:
+        print "Correcting backward"
+        requests.post('http://10.10.4.236:5000/backward/300/20/')
+        returnCommando="correcting"
+    
+    
+    cmdPrint=""
+    if commando=="LEFT":
+        cmdPrint="Correcting left"
+    elif commando=="RIGHT":
+        cmdPrint="Correcting right"
+    elif commando == None:
+        cmdPrint="Correcting none"
+    
+    print cmdPrint, round(degrees,2)
+    
+    (deltaTime, speed) = calculateTimeSpeedFromDegrees(degrees);
+    if degrees< 45:
+        if (commando == "LEFT"):
+            left(deltaTime, speed)
+            returnCommando="correcting"
+        elif (commando == "RIGHT"):
+            right(deltaTime, speed)
+            returnCommando="correcting"
+    else:
+        print "No horizontal lines found, going backwards"
+        requests.post('http://10.10.4.236:5000/backward/500/20/')
+    
+    return returnCommando
         
         
 def calculateTimeSpeedFromDegrees(degrees):
-    time = float(0.25*degrees)
+    time = float(0.08*degrees)
     speed = 20
     return (time, speed)
 

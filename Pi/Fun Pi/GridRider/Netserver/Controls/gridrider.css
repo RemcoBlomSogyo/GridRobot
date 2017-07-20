@@ -1,0 +1,30 @@
+body {
+	font-family: "Raleway", sans-serif;
+	margin: 0;
+	background: radial-gradient(circle, white, #8D9EA7, #596A73);
+	background-attachment: fixed;
+}
+
+#forward {
+	position: absolute;
+	left: 100px;
+	top: 10px;
+}
+
+#backward {
+	position: absolute;
+	left: 100px;
+	top: 80px;
+}
+
+#left {
+	position: absolute;
+	left: 20px;
+	top: 80px;
+}
+
+#right {
+	position: absolute;
+	left: 180px;
+	top: 80px;
+}

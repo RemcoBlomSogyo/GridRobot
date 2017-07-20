@@ -149,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
                 //URL url = new URL("http://192.168.1.50:5000/" + commando);
 
                 System.out.println(params[0]);
-                String urlStr = "http://10.10.4.236:5000/" + params[0];
+                //String urlStr = "http://10.10.4.236:5000/" + params[0];
+                String urlStr = "http://10.10.2.95:4000/changeRoute/" + params[0];
                 System.out.println(urlStr);
                 URL url = new URL(urlStr);
 

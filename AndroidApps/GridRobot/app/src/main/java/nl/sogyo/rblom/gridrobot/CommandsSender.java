@@ -15,12 +15,13 @@ class CommandsSender extends AsyncTask<String, Void, Void> {
         HttpURLConnection urlConnection = null;
         try {
             System.out.println(params[0]);
-            String urlStr = "http://10.10.4.236:5000/" + params[0];
+            String urlStr = "http://10.10.4.236:5000/changeRoute/" + params[0];
+            //String urlStr = "http://10.10.2.95:4000/changeRoute/" + params[0];
             System.out.println(urlStr);
             URL url = new URL(urlStr);
 
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("POST");
+            //urlConnection.setRequestMethod("POST");
 
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
